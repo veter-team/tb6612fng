@@ -1,0 +1,22 @@
+LDFLAGS += -lrtdm
+
+XENOCONFIG = xeno-config
+CFLAGS += $(shell $(XENOCONFIG) --skin=native --cflags) $(MY_CFLAGS)
+LDFLAGS += $(shell $(XENOCONFIG) --skin=native --ldflags) $(MY_LDFLAGS) -lnative
+
+# This includes the library path of given Xenomai into the binary to make live
+# easier for beginners if Xenomai's libs are not in any default search path.
+LDFLAGS += -Xlinker -rpath -Xlinker $(shell $(XENOCONFIG) --libdir)
+
+
+all: twiddle
+
+twiddle: twiddle.o
+	$(CC) twiddle.o $(LDFLAGS) -o twiddle
+
+twiddle.o: twiddle.c ../pid-params.h
+	$(CC) -c $(CFLAGS) twiddle.c
+
+clean:
+	rm -f twiddle.o twiddle
+
