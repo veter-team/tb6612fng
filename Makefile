@@ -1,6 +1,6 @@
 obj-m := tb6612fng.o
 
-tb6612fng-objs := tb6612fng-drv.o pwm-task-proc.o divconst.o gpio-manip.o
+tb6612fng-objs := tb6612fng-drv.o pwm-task-proc.o divconst.o gpio-manip.o pid-controller.o
 
 # Default to sources of currently running kernel
 KERNEL_SRC ?= /lib/modules/$(shell uname -r)/build
